@@ -1,0 +1,32 @@
+.display {
+  flex: 1;
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 200px;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+}
+
+button {
+  border-radius: 10px;
+}
+
+.numbers button {
+  padding: 20px;
+}
+
+.operations {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.operations button {
+  padding: 20px;
+}
