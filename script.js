@@ -19,17 +19,17 @@ function divide(a, b) {
 }
 
 function operate(a, b, operation) {
-  switch (operation) {
-    case "+":
-      add(a, b);
-      break;
-    case "-":
-      sub(a, b);
-      break;
-    case "*":
-      multiply(a, b);
-      break;
-    case "/":
-      divide(a, b);
-  }
+  if (operation === "+") return add(a, b);
+  if (operation === "-") return sub(a, b);
+  if (operation === "*") return multiply(a, b);
+  if (operation === "/") return divide(a, b);
 }
+
+//prints the digit button pressed in the calculator display
+const displayValue = document.querySelector(".display");
+const digitButtons = document.querySelectorAll("button");
+digitButtons.forEach((digit) => {
+  digit.addEventListener("click", () => {
+    displayValue.textContent = digit.textContent;
+  });
+});
