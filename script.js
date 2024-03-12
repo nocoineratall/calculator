@@ -1,6 +1,7 @@
 let num1;
 let num2;
 let operator;
+let isOperatorSelected = false;
 
 function add(a, b) {
   return a + b;
@@ -21,7 +22,7 @@ function divide(a, b) {
 function operate(a, b, operation) {
   if (operation === "+") return add(a, b);
   if (operation === "-") return sub(a, b);
-  if (operation === "*") return multiply(a, b);
+  if (operation === "x") return multiply(a, b);
   if (operation === "/") return divide(a, b);
 }
 
@@ -31,6 +32,17 @@ const digitButtons = document.querySelectorAll(".numbers .digit");
 digitButtons.forEach((digit) => {
   digit.addEventListener("click", () => {
     displayValue.textContent = digit.textContent;
-    num1 = digit.textContent;
+    isOperatorSelected
+      ? (num2 = digit.textContent)
+      : (num1 = digit.textContent);
+  });
+});
+
+// makes the operator selection
+const operatorsButtons = document.querySelectorAll(".operations .op");
+operatorsButtons.forEach((operation) => {
+  operation.addEventListener("click", () => {
+    operator = operation.textContent.toLowerCase();
+    isOperatorSelected = true;
   });
 });
