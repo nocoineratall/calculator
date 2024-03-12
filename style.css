@@ -1,5 +1,10 @@
+.calculator {
+  max-width: 300px;
+}
+
 .display {
-  flex: 1;
+  border: 1px solid red;
+  min-height: 50px;
 }
 
 .numbers {
