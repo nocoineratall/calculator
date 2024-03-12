@@ -4,7 +4,7 @@ let operator;
 let isOperatorSelected = false;
 
 function add(a, b) {
-  return a + b;
+  return +a + +b;
 }
 
 function sub(a, b) {
@@ -45,4 +45,22 @@ operatorsButtons.forEach((operation) => {
     operator = operation.textContent.toLowerCase();
     isOperatorSelected = true;
   });
+});
+
+// enables clear button
+const clearButton = document.querySelector(".numbers .clr");
+clearButton.addEventListener("click", () => {
+  displayValue.textContent = "";
+  isOperatorSelected = false;
+  operator = undefined;
+  num1 = undefined;
+  num2 = undefined;
+});
+
+// enables equals button
+const computeButton = document.querySelector(".numbers .equals");
+computeButton.addEventListener("click", () => {
+  displayValue.textContent = operate(num1, num2, operator);
+  operator = undefined;
+  isOperatorSelected = false;
 });
