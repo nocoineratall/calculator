@@ -27,9 +27,10 @@ function operate(a, b, operation) {
 
 //prints the digit button pressed in the calculator display
 const displayValue = document.querySelector(".display");
-const digitButtons = document.querySelectorAll("button");
+const digitButtons = document.querySelectorAll(".numbers .digit");
 digitButtons.forEach((digit) => {
   digit.addEventListener("click", () => {
     displayValue.textContent = digit.textContent;
+    num1 = digit.textContent;
   });
 });
