@@ -2,9 +2,10 @@ let num1;
 let num2;
 let operator;
 let isOperatorSelected = false;
+let isFirstTime = true;
 
 function add(a, b) {
-  return +a + +b;
+  return +a + +b; //otherwise is adds strings
 }
 
 function sub(a, b) {
@@ -31,10 +32,15 @@ const displayValue = document.querySelector(".display");
 const digitButtons = document.querySelectorAll(".numbers .digit");
 digitButtons.forEach((digit) => {
   digit.addEventListener("click", () => {
-    displayValue.textContent = digit.textContent;
-    isOperatorSelected
-      ? (num2 = digit.textContent)
-      : (num1 = digit.textContent);
+    if (!isOperatorSelected) {
+      displayValue.textContent += digit.textContent;
+      num1 = displayValue.textContent;
+    } else {
+      if (isFirstTime) displayValue.textContent = "";
+      isFirstTime = false;
+      displayValue.textContent += digit.textContent;
+      num2 = displayValue.textContent;
+    }
   });
 });
 
@@ -52,6 +58,7 @@ const clearButton = document.querySelector(".numbers .clr");
 clearButton.addEventListener("click", () => {
   displayValue.textContent = "";
   isOperatorSelected = false;
+  isFirstTime = true;
   operator = undefined;
   num1 = undefined;
   num2 = undefined;
@@ -60,7 +67,14 @@ clearButton.addEventListener("click", () => {
 // enables equals button
 const computeButton = document.querySelector(".numbers .equals");
 computeButton.addEventListener("click", () => {
-  displayValue.textContent = operate(num1, num2, operator);
-  operator = undefined;
-  isOperatorSelected = false;
+  if (isOperatorSelected) {
+    let result = operate(num1, num2, operator);
+    displayValue.textContent = result;
+    num1 = result;
+    operator = undefined;
+    isOperatorSelected = false;
+    isFirstTime = true;
+  } else {
+    displayValue.textContent = "Select a number or operator first";
+  }
 });
