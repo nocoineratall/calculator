@@ -1,11 +1,12 @@
+// Initialize global variables
 let num1;
 let num2;
 let operator;
 let result;
 let isOperatorSelected = false;
-let isReset = false;
-//let isFirstTime = true;
+let isEvaluated = false;
 
+// Elementary math functions
 function add(a, b) {
   return +a + +b; //otherwise it adds strings
 }
@@ -34,12 +35,13 @@ const displayValue = document.querySelector(".display");
 const digitButtons = document.querySelectorAll(".numbers .digit");
 digitButtons.forEach((digitBtn) => {
   digitBtn.addEventListener("click", () => {
-    //needed to clear display after "=" button being used
-    if (isReset) {
+    //clears display after "=" button being used
+    if (isEvaluated) {
       displayValue.textContent = "";
-      isReset = false;
+      isEvaluated = false;
     }
     displayValue.textContent += digitBtn.textContent;
+    //logic to assign num1 or num2
     if (isOperatorSelected) {
       num2 = displayValue.textContent;
       result = operate(num1, num2, operator);
@@ -49,20 +51,21 @@ digitButtons.forEach((digitBtn) => {
   });
 });
 
-// makes the operator selection
+// selects operator
 const operatorsButtons = document.querySelectorAll(".operations .op");
 const currentOperator = document.querySelector(".current-operator");
 operatorsButtons.forEach((operatorBtn) => {
   operatorBtn.addEventListener("click", () => {
     currentOperator.textContent = operatorBtn.textContent;
     operator = operatorBtn.textContent.toLowerCase();
+    //allows multiple operations to be chained together
     if (isOperatorSelected) num1 = result;
     isOperatorSelected = true;
     displayValue.textContent = "";
   });
 });
 
-// enables clear button
+// clears display and reset variables value
 const clearButton = document.querySelector(".numbers .clr");
 clearButton.addEventListener("click", () => {
   displayValue.textContent = "";
@@ -70,21 +73,23 @@ clearButton.addEventListener("click", () => {
   resetVariables();
 });
 
-// prints result to display and resets variables
+// prints result to display
 const computeButton = document.querySelector(".numbers .equals");
 computeButton.addEventListener("click", () => {
   if (isOperatorSelected) {
     displayValue.textContent = result;
     currentOperator.textContent = "";
+    isEvaluated = true;
   } else {
     displayValue.textContent = "Nothing to evaluate";
   }
 });
 
 function resetVariables() {
-  isReset = true;
+  isEvaluated = true;
   isOperatorSelected = false;
   operator = undefined;
   num1 = undefined;
   num2 = undefined;
+  result = undefined;
 }
