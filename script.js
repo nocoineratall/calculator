@@ -6,28 +6,11 @@ let result;
 let isOperatorSelected = false;
 let isEvaluated = false;
 
-// Elementary math functions
-function add(a, b) {
-  return +a + +b; //otherwise it adds strings
-}
-
-function sub(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
 function operate(a, b, operation) {
-  if (operation === "+") return add(a, b);
-  if (operation === "-") return sub(a, b);
-  if (operation === "x") return multiply(a, b);
-  if (operation === "/") return divide(a, b);
+  if (operation === "+") return +a + +b;
+  if (operation === "-") return a - b;
+  if (operation === "x") return a * b;
+  if (operation === "/") return a / b;
 }
 
 //assigns value to the two terms num1 and num2
@@ -56,12 +39,17 @@ const operatorsButtons = document.querySelectorAll(".operations .op");
 const currentOperator = document.querySelector(".current-operator");
 operatorsButtons.forEach((operatorBtn) => {
   operatorBtn.addEventListener("click", () => {
-    currentOperator.textContent = operatorBtn.textContent;
-    operator = operatorBtn.textContent.toLowerCase();
-    //allows multiple operations to be chained together
-    if (isOperatorSelected) num1 = result;
-    isOperatorSelected = true;
-    displayValue.textContent = "";
+    //prevents operators to be selected before numbers
+    if (num1 == undefined) {
+      displayValue.textContent = "Nothing to evaluate";
+    } else {
+      currentOperator.textContent = operatorBtn.textContent;
+      operator = operatorBtn.textContent.toLowerCase();
+      //allows multiple operations to be chained together
+      if (isOperatorSelected) num1 = result;
+      isOperatorSelected = true;
+      displayValue.textContent = "";
+    }
   });
 });
 
@@ -76,10 +64,10 @@ clearButton.addEventListener("click", () => {
 // prints result to display
 const computeButton = document.querySelector(".numbers .equals");
 computeButton.addEventListener("click", () => {
+  isEvaluated = true;
   if (isOperatorSelected) {
     displayValue.textContent = result;
     currentOperator.textContent = "";
-    isEvaluated = true;
   } else {
     displayValue.textContent = "Nothing to evaluate";
   }
