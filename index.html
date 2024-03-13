@@ -9,7 +9,10 @@
   </head>
   <body>
     <div class="calculator">
-      <div class="display"></div>
+      <div class="display-container">
+        <div class="display"></div>
+        <div class="current-operator"></div>
+      </div>
       <div class="buttons">
         <div class="numbers">
           <button class="digit 1">1</button>
@@ -21,15 +24,15 @@
           <button class="digit 7">7</button>
           <button class="digit 8">8</button>
           <button class="digit 9">9</button>
-          <button class="op clr">C</button>
+          <button class="func clr">C</button>
           <button class="digit 0">0</button>
-          <button class="op =">=</button>
+          <button class="func equals">=</button>
         </div>
         <div class="operations">
-          <button class="plus">+</button>
-          <button class="minus">-</button>
-          <button class="times">X</button>
-          <button class="division">/</button>
+          <button class="op plus">+</button>
+          <button class="op minus">-</button>
+          <button class="op times">X</button>
+          <button class="op division">/</button>
         </div>
       </div>
     </div>
