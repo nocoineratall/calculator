@@ -5,6 +5,7 @@ let operator;
 let result;
 let isOperatorSelected = false;
 let isEvaluated = false;
+let isFloating = false;
 
 function operate(a, b, operation) {
   if (operation === "+") return +a + +b;
@@ -24,6 +25,7 @@ digitButtons.forEach((digitBtn) => {
       isEvaluated = false;
     }
     displayValue.textContent += digitBtn.textContent;
+
     //logic to assign num1 or num2
     if (isOperatorSelected) {
       num2 = displayValue.textContent;
@@ -34,8 +36,15 @@ digitButtons.forEach((digitBtn) => {
   });
 });
 
+// manage point for itself
+const floatingPoint = document.querySelector(".numbers .point");
+floatingPoint.addEventListener("click", () => {
+  if (!displayValue.textContent.includes("."))
+    displayValue.textContent += floatingPoint.textContent;
+});
+
 // selects operator
-const operatorsButtons = document.querySelectorAll(".operations .op");
+const operatorsButtons = document.querySelectorAll(".operators .op");
 const currentOperator = document.querySelector(".current-operator");
 operatorsButtons.forEach((operatorBtn) => {
   operatorBtn.addEventListener("click", () => {
@@ -54,7 +63,7 @@ operatorsButtons.forEach((operatorBtn) => {
 });
 
 // clears display and reset variables value
-const clearButton = document.querySelector(".numbers .clr");
+const clearButton = document.querySelector(".functions .clr");
 clearButton.addEventListener("click", () => {
   displayValue.textContent = "";
   currentOperator.textContent = "";
@@ -62,7 +71,7 @@ clearButton.addEventListener("click", () => {
 });
 
 // prints result to display
-const computeButton = document.querySelector(".numbers .equals");
+const computeButton = document.querySelector(".functions .equals");
 computeButton.addEventListener("click", () => {
   isEvaluated = true;
   if (isOperatorSelected) {
@@ -76,6 +85,7 @@ computeButton.addEventListener("click", () => {
 function resetVariables() {
   isEvaluated = true;
   isOperatorSelected = false;
+  isFloating = false;
   operator = undefined;
   num1 = undefined;
   num2 = undefined;
