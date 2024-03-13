@@ -1,11 +1,13 @@
 let num1;
 let num2;
 let operator;
+let result;
 let isOperatorSelected = false;
-let isFirstTime = true;
+let isReset = false;
+//let isFirstTime = true;
 
 function add(a, b) {
-  return +a + +b; //otherwise is adds strings
+  return +a + +b; //otherwise it adds strings
 }
 
 function sub(a, b) {
@@ -27,29 +29,36 @@ function operate(a, b, operation) {
   if (operation === "/") return divide(a, b);
 }
 
-//prints the digit button pressed in the calculator display
+//assigns value to the two terms num1 and num2
 const displayValue = document.querySelector(".display");
 const digitButtons = document.querySelectorAll(".numbers .digit");
-digitButtons.forEach((digit) => {
-  digit.addEventListener("click", () => {
-    if (!isOperatorSelected) {
-      displayValue.textContent += digit.textContent;
-      num1 = displayValue.textContent;
-    } else {
-      if (isFirstTime) displayValue.textContent = "";
-      isFirstTime = false;
-      displayValue.textContent += digit.textContent;
+digitButtons.forEach((digitBtn) => {
+  digitBtn.addEventListener("click", () => {
+    //needed to clear display after "=" button being used
+    if (isReset) {
+      displayValue.textContent = "";
+      isReset = false;
+    }
+    displayValue.textContent += digitBtn.textContent;
+    if (isOperatorSelected) {
       num2 = displayValue.textContent;
+      result = operate(num1, num2, operator);
+    } else {
+      num1 = displayValue.textContent;
     }
   });
 });
 
 // makes the operator selection
 const operatorsButtons = document.querySelectorAll(".operations .op");
-operatorsButtons.forEach((operation) => {
-  operation.addEventListener("click", () => {
-    operator = operation.textContent.toLowerCase();
+const currentOperator = document.querySelector(".current-operator");
+operatorsButtons.forEach((operatorBtn) => {
+  operatorBtn.addEventListener("click", () => {
+    currentOperator.textContent = operatorBtn.textContent;
+    operator = operatorBtn.textContent.toLowerCase();
+    if (isOperatorSelected) num1 = result;
     isOperatorSelected = true;
+    displayValue.textContent = "";
   });
 });
 
@@ -57,24 +66,25 @@ operatorsButtons.forEach((operation) => {
 const clearButton = document.querySelector(".numbers .clr");
 clearButton.addEventListener("click", () => {
   displayValue.textContent = "";
-  isOperatorSelected = false;
-  isFirstTime = true;
-  operator = undefined;
-  num1 = undefined;
-  num2 = undefined;
+  currentOperator.textContent = "";
+  resetVariables();
 });
 
-// enables equals button
+// prints result to display and resets variables
 const computeButton = document.querySelector(".numbers .equals");
 computeButton.addEventListener("click", () => {
   if (isOperatorSelected) {
-    let result = operate(num1, num2, operator);
     displayValue.textContent = result;
-    num1 = result;
-    operator = undefined;
-    isOperatorSelected = false;
-    isFirstTime = true;
+    currentOperator.textContent = "";
   } else {
-    displayValue.textContent = "Select a number or operator first";
+    displayValue.textContent = "Nothing to evaluate";
   }
 });
+
+function resetVariables() {
+  isReset = true;
+  isOperatorSelected = false;
+  operator = undefined;
+  num1 = undefined;
+  num2 = undefined;
+}
