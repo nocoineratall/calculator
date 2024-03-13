@@ -5,7 +5,6 @@ let operator;
 let result;
 let isOperatorSelected = false;
 let isEvaluated = false;
-let isFloating = false;
 
 function operate(a, b, operation) {
   if (operation === "+") return +a + +b;
@@ -29,14 +28,18 @@ digitButtons.forEach((digitBtn) => {
     //logic to assign num1 or num2
     if (isOperatorSelected) {
       num2 = displayValue.textContent;
-      result = operate(num1, num2, operator);
+      if (num2 == 0) {
+        displayValue.textContent = "Can't divide by zero - Reset calculator";
+      } else {
+        result = operate(num1, num2, operator);
+      }
     } else {
       num1 = displayValue.textContent;
     }
   });
 });
 
-// manage point for itself
+// manages floating point button for itself
 const floatingPoint = document.querySelector(".numbers .point");
 floatingPoint.addEventListener("click", () => {
   if (!displayValue.textContent.includes("."))
@@ -62,11 +65,14 @@ operatorsButtons.forEach((operatorBtn) => {
   });
 });
 
+// backspace
+const backspaceBtn = document.querySelector(".operators .backspace");
+backspaceBtn.addEventListener("click", () => {});
+
 // clears display and reset variables value
-const clearButton = document.querySelector(".functions .clr");
+const clearButton = document.querySelector(".numbers .clr");
 clearButton.addEventListener("click", () => {
   displayValue.textContent = "";
-  currentOperator.textContent = "";
   resetVariables();
 });
 
@@ -85,9 +91,9 @@ computeButton.addEventListener("click", () => {
 function resetVariables() {
   isEvaluated = true;
   isOperatorSelected = false;
-  isFloating = false;
   operator = undefined;
   num1 = undefined;
   num2 = undefined;
   result = undefined;
+  currentOperator.textContent = "";
 }
