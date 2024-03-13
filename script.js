@@ -67,7 +67,10 @@ operatorsButtons.forEach((operatorBtn) => {
 
 // backspace
 const backspaceBtn = document.querySelector(".operators .backspace");
-backspaceBtn.addEventListener("click", () => {});
+backspaceBtn.addEventListener("click", () => {
+  let displayContent = displayValue.textContent;
+  displayValue.textContent = displayContent.slice(0, displayContent.length - 1);
+});
 
 // clears display and reset variables value
 const clearButton = document.querySelector(".numbers .clr");
