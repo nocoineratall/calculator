@@ -32,6 +32,7 @@ digitButtons.forEach((digitBtn) => {
 // manages floating point button for itself
 const floatingPoint = document.querySelector(".numbers .point");
 floatingPoint.addEventListener("click", () => {
+  // so the point is selected only once
   if (!displayValue.textContent.includes("."))
     displayValue.textContent += floatingPoint.textContent;
 });
@@ -66,20 +67,17 @@ backspaceBtn.addEventListener("click", () => {
 // clears display and reset variables value
 const clearButton = document.querySelector(".numbers .clr");
 clearButton.addEventListener("click", () => {
-  displayValue.textContent = "";
   resetVariables();
+  displayValue.textContent = "";
 });
 
 // prints result to display
 const computeButton = document.querySelector(".functions .equals");
 computeButton.addEventListener("click", () => {
-  isEvaluated = true;
-  if (isOperatorSelected) {
-    displayValue.textContent = result;
-    currentOperator.textContent = "";
-  } else {
-    displayValue.textContent = "Nothing to evaluate";
-  }
+  printResult();
+  let tempResult = result;
+  resetVariables();
+  num1 = tempResult;
 });
 
 function resetVariables() {
@@ -105,3 +103,65 @@ function assignTerms() {
     num1 = displayValue.textContent;
   }
 }
+
+function printResult() {
+  isEvaluated = true;
+  if (isOperatorSelected) {
+    displayValue.textContent = result;
+    currentOperator.textContent = "";
+  } else {
+    displayValue.textContent = "Nothing to evaluate";
+  }
+}
+
+// Adds keyboard functionality
+document.addEventListener("keydown", function (event) {
+  console.log(event.key);
+  if (
+    event.key == 0 ||
+    event.key == 1 ||
+    event.key == 2 ||
+    event.key == 3 ||
+    event.key == 4 ||
+    event.key == 5 ||
+    event.key == 6 ||
+    event.key == 7 ||
+    event.key == 8 ||
+    event.key == 9
+  ) {
+    displayValue.textContent += event.key;
+    assignTerms();
+  }
+  if (event.key == ".") {
+    if (!displayValue.textContent.includes("."))
+      displayValue.textContent += ".";
+  }
+  if (
+    event.key == "+" ||
+    event.key == "-" ||
+    event.key == "*" ||
+    event.key == "/"
+  ) {
+    // had to copy the same logic for when operator is selected but using event.key
+    if (num1 == undefined) {
+      displayValue.textContent = "Nothing to evaluate";
+    } else {
+      currentOperator.textContent = event.key;
+      operator = event.key;
+      //allows multiple operations to be chained together
+      if (isOperatorSelected) num1 = result;
+      isOperatorSelected = true;
+      displayValue.textContent = "";
+    }
+  }
+  if (event.key == "Delete") {
+    resetVariables();
+    displayValue.textContent = "";
+  }
+  if (event.key == "Enter") {
+    printResult();
+    let tempResult = result;
+    resetVariables();
+    num1 = tempResult;
+  }
+});
