@@ -24,7 +24,6 @@ digitButtons.forEach((digitBtn) => {
       isEvaluated = false;
     }
     displayValue.textContent += digitBtn.textContent;
-
     assignTerms();
   });
 });
@@ -59,9 +58,7 @@ operatorsButtons.forEach((operatorBtn) => {
 // backspace
 const backspaceBtn = document.querySelector(".operators .backspace");
 backspaceBtn.addEventListener("click", () => {
-  let displayContent = displayValue.textContent;
-  displayValue.textContent = displayContent.slice(0, displayContent.length - 1);
-  assignTerms();
+  eraseLastDigit();
 });
 
 // clears display and reset variables value
@@ -104,6 +101,12 @@ function assignTerms() {
   }
 }
 
+function eraseLastDigit() {
+  let displayContent = displayValue.textContent;
+  displayValue.textContent = displayContent.slice(0, displayContent.length - 1);
+  assignTerms();
+}
+
 function printResult() {
   isEvaluated = true;
   if (isOperatorSelected) {
@@ -115,8 +118,7 @@ function printResult() {
 }
 
 // Adds keyboard functionality
-document.addEventListener("keydown", function (event) {
-  console.log(event.key);
+document.addEventListener("keydown", (event) => {
   if (
     event.key == 0 ||
     event.key == 1 ||
@@ -148,6 +150,11 @@ document.addEventListener("keydown", function (event) {
     } else {
       currentOperator.textContent = event.key;
       operator = event.key;
+      // allows "*" key to operate as multiplication
+      if (operator == "*") {
+        operator = "x";
+        currentOperator.textContent = "X";
+      }
       //allows multiple operations to be chained together
       if (isOperatorSelected) num1 = result;
       isOperatorSelected = true;
@@ -157,6 +164,9 @@ document.addEventListener("keydown", function (event) {
   if (event.key == "Delete") {
     resetVariables();
     displayValue.textContent = "";
+  }
+  if (event.key == "Backspace") {
+    eraseLastDigit();
   }
   if (event.key == "Enter") {
     printResult();
