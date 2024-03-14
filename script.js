@@ -25,17 +25,7 @@ digitButtons.forEach((digitBtn) => {
     }
     displayValue.textContent += digitBtn.textContent;
 
-    //logic to assign num1 or num2
-    if (isOperatorSelected) {
-      num2 = displayValue.textContent;
-      if (num2 == 0) {
-        displayValue.textContent = "Can't divide by zero - Reset calculator";
-      } else {
-        result = operate(num1, num2, operator);
-      }
-    } else {
-      num1 = displayValue.textContent;
-    }
+    assignTerms();
   });
 });
 
@@ -70,6 +60,7 @@ const backspaceBtn = document.querySelector(".operators .backspace");
 backspaceBtn.addEventListener("click", () => {
   let displayContent = displayValue.textContent;
   displayValue.textContent = displayContent.slice(0, displayContent.length - 1);
+  assignTerms();
 });
 
 // clears display and reset variables value
@@ -99,4 +90,18 @@ function resetVariables() {
   num2 = undefined;
   result = undefined;
   currentOperator.textContent = "";
+}
+
+//logic to assign num1 or num2
+function assignTerms() {
+  if (isOperatorSelected) {
+    num2 = displayValue.textContent;
+    if (num2 == 0) {
+      displayValue.textContent = "Can't divide by zero - Reset calculator";
+    } else {
+      result = operate(num1, num2, operator);
+    }
+  } else {
+    num1 = displayValue.textContent;
+  }
 }
