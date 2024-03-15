@@ -1,72 +1,77 @@
 * {
-  font-size: 20px;
+  font-size: 40px;
 }
 
 .calculator {
   max-width: 400px;
-  border: 1px solid blue;
 }
 
 .display-container {
   display: flex;
   min-height: 50px;
-  padding: 10px;
   border: 1px solid green;
+  justify-content: flex-end;
+  gap: 15px;
 }
 
 .display {
-  flex: 1;
+  border: 1px solid red;
 }
 
 .current-operator {
   border: 2px solid rgb(33, 33, 172);
   border-radius: 10px;
-  min-width: 50px;
+  min-width: 90px;
   font-size: 30px;
   font-weight: bold;
 }
 
+.top-calculator {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.top-calculator button {
+  flex: 1;
+}
+
+.backspace {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backspace img {
+  max-width: 40px;
+}
+
+.bottom-calculator {
+  display: flex;
+  margin-top: 20px;
+}
+
 .numbers {
+  flex: 3;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding-right: 20px;
-  flex: 3;
-}
-
-.buttons {
-  display: flex;
-}
-
-button {
-  border-radius: 10px;
-  min-width: 80px;
+  gap: 15px;
 }
 
 .numbers button {
+  min-width: 90px;
+  min-height: 90px;
+}
+
+.main-operators {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  padding: 20px;
+  align-items: flex-end;
+  gap: 15px;
 }
 
-.operations {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.operators,
-.functions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.operators button,
-.functions button {
-  padding: 20px;
-}
-
-.func.clr {
-  background-color: rgb(219, 87, 87);
-  color: white;
+.main-operators button {
+  flex: 1;
+  min-width: 90px;
 }
