@@ -3,7 +3,7 @@
 }
 
 .calculator {
-  max-width: 400px;
+  max-width: 430px;
 }
 
 .display-container {
@@ -20,8 +20,7 @@
 
 .current-operator {
   border: 2px solid rgb(33, 33, 172);
-  border-radius: 10px;
-  min-width: 90px;
+  min-width: 100px;
   font-size: 30px;
   font-weight: bold;
 }
@@ -30,6 +29,7 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .top-calculator button {
@@ -40,6 +40,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(98, 153, 255);
 }
 
 .backspace img {
@@ -48,30 +49,40 @@
 
 .bottom-calculator {
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .numbers {
-  flex: 3;
+  flex: 3.2;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
+  margin-right: 10px;
 }
 
 .numbers button {
-  min-width: 90px;
-  min-height: 90px;
+  flex: 1;
+  padding: 30px;
+}
+
+.clr {
+  background-color: rgb(231, 123, 123);
+  color: whitesmoke;
 }
 
 .main-operators {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: flex-end;
-  gap: 15px;
+  gap: 10px;
 }
 
 .main-operators button {
   flex: 1;
   min-width: 90px;
+}
+
+.equals {
+  background-color: rgb(95, 165, 101);
+  color: whitesmoke;
 }
