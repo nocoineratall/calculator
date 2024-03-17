@@ -1,3 +1,15 @@
+/* PSEUDOCODE
+- user can input a number which is taken as first argument of calculation
+- user selects an operator, which is displayed
+- user selects another number which is taken as second argument of calculation
+    * if another operator is selected the result of the previous operation is displayed
+      which becomes the first argument of the next calculation and the cycle repeats
+    * if "=" is pressed the result is displayed and the variables are reset back to default
+- user can use "C" to reset to default
+- user can use backspace to remove a digit from the currently displayed number
+- allow floating point operations 
+*/
+
 // Initialize global variables
 let num1;
 let num2;
@@ -6,76 +18,26 @@ let result;
 let isOperatorSelected = false;
 let isEvaluated = false;
 
-function operate(a, b, operation) {
-  if (operation === "+") return +a + +b;
-  if (operation === "-") return a - b;
-  if (operation === "x") return a * b;
-  if (operation === "/") return a / b;
-}
-
-//assigns value to the two terms num1 and num2
-const displayValue = document.querySelector(".display");
-const digitButtons = document.querySelectorAll(".numbers .digit");
-digitButtons.forEach((digitBtn) => {
-  digitBtn.addEventListener("click", () => {
-    //clears display after "=" button being used
-    if (isEvaluated) {
-      displayValue.textContent = "";
-      isEvaluated = false;
-    }
-    displayValue.textContent += digitBtn.textContent;
-    assignTerms();
-  });
-});
-
-// manages floating point button for itself
+// stores buttons from DOM
+const display = document.querySelector(".display");
+const numberButtons = document.querySelectorAll(".numbers .number");
 const floatingPoint = document.querySelector(".numbers .point");
-floatingPoint.addEventListener("click", () => {
-  // so the point is selected only once
-  if (!displayValue.textContent.includes("."))
-    displayValue.textContent += floatingPoint.textContent;
-});
-
-// selects operator
-const operatorsButtons = document.querySelectorAll(".operators .op");
+const operatorsButtons = document.querySelectorAll(".op");
 const currentOperator = document.querySelector(".current-operator");
-operatorsButtons.forEach((operatorBtn) => {
-  operatorBtn.addEventListener("click", () => {
-    //prevents operators to be selected before numbers
-    if (num1 == undefined) {
-      displayValue.textContent = "Nothing to evaluate";
-    } else {
-      currentOperator.textContent = operatorBtn.textContent;
-      operator = operatorBtn.textContent.toLowerCase();
-      //allows multiple operations to be chained together
-      if (isOperatorSelected) num1 = result;
-      isOperatorSelected = true;
-      displayValue.textContent = "";
-    }
-  });
-});
-
-// backspace
-const backspaceBtn = document.querySelector(".operators .backspace");
-backspaceBtn.addEventListener("click", () => {
-  eraseLastDigit();
-});
-
-// clears display and reset variables value
+const backspaceBtn = document.querySelector(".backspace");
 const clearButton = document.querySelector(".numbers .clr");
-clearButton.addEventListener("click", () => {
-  resetVariables();
-  displayValue.textContent = "";
-});
+const computeButton = document.querySelector(".equals");
 
-// prints result to display
-const computeButton = document.querySelector(".functions .equals");
-computeButton.addEventListener("click", () => {
-  printResult();
-  let tempResult = result;
-  resetVariables();
-  num1 = tempResult;
-});
+function operate(a, b, operator) {
+  if (b != 0 && b != undefined) {
+    if (operator === "+") return +a + +b;
+    if (operator === "-") return a - b;
+    if (operator === "x") return a * b;
+    if (operator === "/") return a / b;
+  } else {
+    display.textContent = "Can't divide by zero";
+  }
+}
 
 function resetVariables() {
   isEvaluated = true;
@@ -87,37 +49,99 @@ function resetVariables() {
   currentOperator.textContent = "";
 }
 
-//logic to assign num1 or num2
 function assignTerms() {
   if (isOperatorSelected) {
-    num2 = displayValue.textContent;
-    if (num2 == 0) {
-      displayValue.textContent = "Can't divide by zero - Reset calculator";
-    } else {
-      result = operate(num1, num2, operator);
-    }
+    num2 = display.textContent;
   } else {
-    num1 = displayValue.textContent;
+    num1 = display.textContent;
   }
 }
 
 function eraseLastDigit() {
-  let displayContent = displayValue.textContent;
-  displayValue.textContent = displayContent.slice(0, displayContent.length - 1);
+  let displayContent = display.textContent;
+  display.textContent = displayContent.slice(0, displayContent.length - 1);
   assignTerms();
 }
 
 function printResult() {
   isEvaluated = true;
   if (isOperatorSelected) {
-    displayValue.textContent = result;
+    display.textContent = result;
+    console.log(result);
     currentOperator.textContent = "";
   } else {
-    displayValue.textContent = "Nothing to evaluate";
+    display.textContent = "Nothing to evaluate";
   }
 }
 
-// Adds keyboard functionality
+/* ------------------------------- EVENTS ------------------------------- */
+
+//assigns value to the two terms num1 and num2
+numberButtons.forEach((numBtn) => {
+  numBtn.addEventListener("click", () => {
+    //clears display after "=" button being used
+    if (isEvaluated) {
+      display.textContent = "";
+      isEvaluated = false;
+    }
+    display.textContent += numBtn.textContent;
+    assignTerms();
+  });
+});
+
+// manages floating point button for itself
+floatingPoint.addEventListener("click", () => {
+  // so the point is selected only once
+  if (!display.textContent.includes("."))
+    display.textContent += floatingPoint.textContent;
+});
+
+// selects operator and computes result
+operatorsButtons.forEach((operatorBtn) => {
+  operatorBtn.addEventListener("click", () => {
+    //prevents operators to be selected before numbers
+    if (num1 == undefined) {
+      printResult();
+    } else {
+      currentOperator.textContent = operatorBtn.textContent;
+      //allows multiple operations to be chained together
+      result = operate(num1, num2, operator);
+      isEvaluated = true;
+      operator = operatorBtn.textContent.toLowerCase();
+      console.log(result);
+      if (num2 == undefined) {
+        display.textContent = num1;
+      } else {
+        display.textContent = result;
+      }
+      if (isOperatorSelected) num1 = result;
+      isOperatorSelected = true;
+    }
+  });
+});
+
+// backspace
+backspaceBtn.addEventListener("click", () => {
+  eraseLastDigit();
+});
+
+// clears display and reset variables value
+clearButton.addEventListener("click", () => {
+  resetVariables();
+  display.textContent = "";
+});
+
+// prints result to display
+computeButton.addEventListener("click", () => {
+  result = operate(num1, num2, operator);
+  printResult();
+  let tempResult = result;
+  resetVariables();
+  num1 = tempResult;
+});
+
+/* ------------------------------- KEYBOARD ------------------------------- */
+
 document.addEventListener("keydown", (event) => {
   if (
     event.key == 0 ||
@@ -131,12 +155,15 @@ document.addEventListener("keydown", (event) => {
     event.key == 8 ||
     event.key == 9
   ) {
-    displayValue.textContent += event.key;
+    if (isEvaluated) {
+      display.textContent = "";
+      isEvaluated = false;
+    }
+    display.textContent += event.key;
     assignTerms();
   }
   if (event.key == ".") {
-    if (!displayValue.textContent.includes("."))
-      displayValue.textContent += ".";
+    if (!display.textContent.includes(".")) display.textContent += ".";
   }
   if (
     event.key == "+" ||
@@ -145,30 +172,37 @@ document.addEventListener("keydown", (event) => {
     event.key == "/"
   ) {
     // had to copy the same logic for when operator is selected but using event.key
+    //prevents operators to be selected before numbers
     if (num1 == undefined) {
-      displayValue.textContent = "Nothing to evaluate";
+      display.textContent = "Select a number first";
     } else {
       currentOperator.textContent = event.key;
+      //allows multiple operations to be chained together
+      result = operate(num1, num2, operator);
+      isEvaluated = true;
       operator = event.key;
-      // allows "*" key to operate as multiplication
       if (operator == "*") {
         operator = "x";
         currentOperator.textContent = "X";
       }
-      //allows multiple operations to be chained together
+      if (num2 == undefined) {
+        display.textContent = num1;
+      } else {
+        display.textContent = result;
+      }
       if (isOperatorSelected) num1 = result;
       isOperatorSelected = true;
-      displayValue.textContent = "";
     }
   }
   if (event.key == "Delete") {
     resetVariables();
-    displayValue.textContent = "";
+    display.textContent = "";
   }
   if (event.key == "Backspace") {
     eraseLastDigit();
   }
   if (event.key == "Enter") {
+    result = operate(num1, num2, operator);
     printResult();
     let tempResult = result;
     resetVariables();
