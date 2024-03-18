@@ -3,11 +3,29 @@
   src: url("7segment.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   /*url('myfont.ttf') format('truetype'); Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5*/
 }
+
+@font-face {
+  font-family: "7segmentTitle";
+  src: url("7SEGMENTALDIGITALDISPLAY.ttf") format("truetype"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 body {
   background-color: darkslategrey;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   height: 100vh;
+}
+
+.header {
+  font-family: "7segmentTitle";
+  font-size: 80px;
+  color: rgb(0, 17, 255);
+  padding: 30px 60px;
+  background-color: greenyellow;
+  border-radius: 20px;
+  border: 10px solid rgb(51, 51, 70);
+  margin: 40px 0px;
 }
 
 .calculator {
@@ -33,6 +51,7 @@ body {
   color: rgb(0, 17, 255);
   font-size: 60px;
   font-family: "7segmentDisplay";
+  letter-spacing: 3px;
   padding: 8px 0px;
   display: flex;
   padding: 8px;
