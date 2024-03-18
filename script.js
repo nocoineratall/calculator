@@ -7,7 +7,7 @@
     * if "=" is pressed the result is displayed and the variables are reset back to default
 - user can use "C" to reset to default
 - user can use backspace to remove a digit from the currently displayed number
-- allow floating point operations 
+- floating point calculations are allowed 
 */
 
 // Initialize global variables
@@ -35,12 +35,12 @@ function operate(a, b, operator) {
     if (operator === "x") return a * b;
     if (operator === "/") return a / b;
   } else {
-    display.textContent = "Can't divide by zero";
+    display.textContent = "Error";
   }
 }
 
 function resetVariables() {
-  isEvaluated = true;
+  isEvaluated = false;
   isOperatorSelected = false;
   operator = undefined;
   num1 = undefined;
@@ -67,10 +67,7 @@ function printResult() {
   isEvaluated = true;
   if (isOperatorSelected) {
     display.textContent = result;
-    console.log(result);
     currentOperator.textContent = "";
-  } else {
-    display.textContent = "Nothing to evaluate";
   }
 }
 
@@ -108,7 +105,6 @@ operatorsButtons.forEach((operatorBtn) => {
       result = operate(num1, num2, operator);
       isEvaluated = true;
       operator = operatorBtn.textContent.toLowerCase();
-      console.log(result);
       if (num2 == undefined) {
         display.textContent = num1;
       } else {
