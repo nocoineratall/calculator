@@ -22,12 +22,23 @@ body {
   height: 100vh;
 }
 
-.mark {
+.header {
+  font-family: "7segmentTitle";
+  font-size: 80px;
+  color: rgb(0, 17, 255);
+  padding: 20px 60px;
+  background-color: greenyellow;
+  border-radius: 20px;
+  border: 10px solid rgb(51, 51, 70);
+  margin: 20px 0px;
+}
+
+.top-calculator {
   display: flex;
   justify-content: space-between;
 }
 
-.solar-cells {
+.solar-panel {
   display: flex;
   gap: 3px;
   background-color: rgb(161, 135, 95);
@@ -57,17 +68,6 @@ body {
   color: black;
 }
 
-.header {
-  font-family: "7segmentTitle";
-  font-size: 80px;
-  color: rgb(0, 17, 255);
-  padding: 30px 60px;
-  background-color: greenyellow;
-  border-radius: 20px;
-  border: 10px solid rgb(51, 51, 70);
-  margin: 40px 0px;
-}
-
 .calculator {
   max-width: 430px;
   padding: 25px;
@@ -83,45 +83,53 @@ body {
   border: 1px solid green;
   justify-content: flex-end;
   border-radius: 10px;
-  gap: 15px;
 }
 
 .display {
-  border: 1px solid red;
+  margin-right: 10px;
   color: rgb(0, 17, 255);
   font-size: 60px;
   font-family: "7segmentDisplay";
   letter-spacing: 3px;
-  padding: 8px 0px;
   display: flex;
-  padding: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 .current-operator {
-  border: 2px solid rgb(33, 33, 172);
+  font-family: "7segmentTitle";
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 100px;
   font-size: 40px;
-  font-weight: bold;
-  margin-left: 10px;
+  font-weight: 900;
 }
 
-.top-calculator {
+.top-operator {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   margin-top: 20px;
 }
 
-.top-calculator button {
+.top-operator button {
+  font-family: "7segmentTitle";
+  font-weight: 700;
   flex: 1;
   font-size: 40px;
+  padding: 10px;
 }
 
-.backspace {
+#backspace {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(61, 95, 158);
+  color: whitesmoke;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 3px;
 }
 
 .backspace img {
@@ -142,13 +150,15 @@ body {
 }
 
 .numbers button {
+  font-family: "7segmentTitle";
+  font-weight: 700;
   flex: 1;
   padding: 30px;
   font-size: 40px;
 }
 
 .clr {
-  background-color: rgb(179, 92, 92);
+  background-color: rgb(151, 77, 77);
   color: whitesmoke;
 }
 
@@ -160,6 +170,8 @@ body {
 }
 
 .main-operators button {
+  font-family: "7segmentTitle";
+  font-weight: 700;
   flex: 1;
   min-width: 90px;
   font-size: 40px;
