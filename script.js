@@ -25,7 +25,7 @@ const numberButtons = document.querySelectorAll(".numbers .number");
 const floatingPoint = document.querySelector(".numbers .point");
 const operatorsButtons = document.querySelectorAll(".op");
 const currentOperator = document.querySelector(".current-operator");
-const backspaceBtn = document.querySelector(".backspace");
+const backspaceBtn = document.querySelector("#backspace");
 const clearButton = document.querySelector(".numbers .clr");
 const computeButton = document.querySelector(".equals");
 
