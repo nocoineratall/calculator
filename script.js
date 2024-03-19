@@ -17,6 +17,7 @@ let operator;
 let result;
 let isOperatorSelected = false;
 let isEvaluated = false;
+let digitsToDisplay = 9;
 
 // stores buttons from DOM
 const display = document.querySelector(".display");
@@ -30,10 +31,10 @@ const computeButton = document.querySelector(".equals");
 
 function operate(a, b, operator) {
   if (b != 0 && b != undefined) {
-    if (operator === "+") return +a + +b;
-    if (operator === "-") return a - b;
-    if (operator === "x") return a * b;
-    if (operator === "/") return a / b;
+    if (operator === "+") return roundToNumOfDigit(+a + +b, digitsToDisplay);
+    if (operator === "-") return roundToNumOfDigit(a - b, digitsToDisplay);
+    if (operator === "x") return roundToNumOfDigit(a * b, digitsToDisplay);
+    if (operator === "/") return roundToNumOfDigit(a / b, digitsToDisplay);
   } else {
     display.textContent = "Error";
   }
@@ -69,6 +70,31 @@ function printResult() {
     display.textContent = result;
     currentOperator.textContent = "";
   }
+}
+
+function roundToNumOfDigit(num, digits) {
+  let number = [];
+  num
+    .toString()
+    .split("")
+    .forEach((char) => {
+      if (digits === 1) {
+        if (char === ".") {
+          number.push(char);
+        } else {
+          number.push((parseInt(char) + 1).toString());
+          digits -= 1;
+        }
+      } else if (digits > 0) {
+        if (char === ".") {
+          number.push(char);
+        } else {
+          number.push(char);
+          digits -= 1;
+        }
+      }
+    });
+  return +number.join("");
 }
 
 /* ------------------------------- EVENTS ------------------------------- */
